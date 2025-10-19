@@ -1,0 +1,18 @@
+# --- Core Deep Learning Framework ---
+torch
+torchvision
+
+# --- Hugging Face Ecosystem ---
+# Untuk memuat dataset & menggunakan model dari Hub
+datasets
+transformers
+timm
+numpy
+pandas
+Pillow
+matplotlib
+seaborn
+opencv-python
+scikit-learn
+jupyter
+notebook

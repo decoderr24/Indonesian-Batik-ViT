@@ -1,0 +1,13 @@
+/Batik-Indonesia
+# Model checkpoints
+*.pth
+outputs/
+src/outputs/
+src/
+
+# TensorBoard logs
+*.tfevents.*
+
+# Cache
+__pycache__/
+*.pyc

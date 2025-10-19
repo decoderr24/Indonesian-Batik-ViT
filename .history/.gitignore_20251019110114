@@ -1,0 +1,5 @@
+/Batik-Indonesia
+*.pth
+outputs/
+src/outputs/
+content/

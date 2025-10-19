@@ -1,0 +1,11 @@
+# Model checkpoints
+*.pth
+outputs/
+src/outputs/
+
+# TensorBoard logs
+*.tfevents.*
+
+# Cache
+__pycache__/
+*.pyc

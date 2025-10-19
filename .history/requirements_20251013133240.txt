@@ -1,0 +1,25 @@
+# --- Core Deep Learning Framework ---
+torch
+torchvision
+
+# --- Hugging Face Ecosystem ---
+# Untuk memuat dataset & menggunakan model dari Hub
+datasets
+transformers
+
+# --- Model Library (Sangat Penting untuk ViT, Swin, ConvNeXt) ---
+# Menyediakan implementasi SOTA yang mudah digunakan
+timm
+
+# --- Data Science & Numerics ---
+numpy
+pandas
+
+# --- Image Processing & Visualization ---
+Pillow
+matplotlib
+seaborn
+opencv-python
+scikit-learn
+jupyter
+notebook
