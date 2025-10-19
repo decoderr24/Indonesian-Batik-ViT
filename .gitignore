@@ -1,14 +1,52 @@
+# Dataset (too large for Git)
 Batik-Indonesia/
-# Model checkpoints
+content/
+
+# Model checkpoints and outputs
 *.pth
+*.pkl
+*.h5
+*.hdf5
 outputs/
 src/outputs/
-src/pycache/
-content/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
 
 # TensorBoard logs
 *.tfevents.*
+logs/
+runs/
 
-# Cache
-__pycache__/
-*.pyc
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Environment variables
+.env
+.venv
+env/
+venv/
+
+# History files (if you don't want to track them)
+.history/
