@@ -80,7 +80,6 @@ class MixupTrainer:
             self.optimizer.step()
             
             total_loss += loss.item()
-            
             # For accuracy calculation, use original targets
             _, predicted = torch.max(output.data, 1)
             total += target.size(0)

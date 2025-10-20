@@ -19,15 +19,19 @@ MEAN = [0.485, 0.456, 0.406]
 STD = [0.229, 0.224, 0.225]
 
 # Transformasi untuk data TRAINING
-# Tujuannya: "menyiksa" data agar model bisa generalisasi
+# Tujuannya: "menyiksa" data agar model bisa generalisasi dengan teknik terbaru
 train_transform = transforms.Compose([
     transforms.Resize((config.IMAGE_SIZE + 32, config.IMAGE_SIZE + 32)),  # Resize lebih besar dulu
-    transforms.RandomCrop((config.IMAGE_SIZE, config.IMAGE_SIZE)),  # Random crop untuk variasi
+    transforms.RandomCrop((config.IMAGE_SIZE, config.IMAGE_SIZE), padding=4),  # Random crop dengan padding
     transforms.RandomHorizontalFlip(p=0.5),
     transforms.RandomVerticalFlip(p=0.2),  # Tambah vertical flip
-    transforms.RandomRotation(degrees=20),  # Increase rotation
-    transforms.ColorJitter(brightness=0.3, contrast=0.3, saturation=0.3, hue=0.1),  # Color augmentation
-    transforms.RandomAffine(degrees=0, translate=(0.1, 0.1), scale=(0.9, 1.1)),  # Geometric augmentation
+    transforms.RandomRotation(degrees=15),  # Moderate rotation
+    transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.05),  # Moderate color augmentation
+    transforms.RandomAffine(degrees=0, translate=(0.1, 0.1), scale=(0.9, 1.1), shear=5),  # Enhanced geometric augmentation
+    
+    # Advanced augmentations
+    transforms.RandomPerspective(distortion_scale=0.2, p=0.3),  # Perspective distortion
+    transforms.RandomErasing(p=0.2, scale=(0.02, 0.33), ratio=(0.3, 3.3)),  # Random erasing
 
     # --- TAMBAHKAN INI ---
     # Ini akan menerapkan augmentasi acak yang kuat
