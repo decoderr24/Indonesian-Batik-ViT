@@ -191,7 +191,7 @@ def train_enhanced_anti_overfitting_model(model_name_key: str, model_name: str, 
     best_epoch = 0
     
     # Early stopping yang lebih ketat
-    patience = 7  # Stop jika tidak ada improvement selama 7 epoch
+    patience = 10  # Stop jika tidak ada improvement selama 7 epoch
     epochs_no_improve = 0
     
     print(f"Memulai enhanced training {config.EPOCHS} epochs...")
