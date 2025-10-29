@@ -26,7 +26,7 @@ from src.model import create_model
 from src.engine import train_step, val_step
 from src.mixup import mixup_data, mixup_criterion
 from src.advanced_augmentation import (
-    cutmix_data, cutmix_criterion, LabelSmoothingCrossEntropy, 
+    cutmix_data, cutmix_criterion, #LabelSmoothingCrossEntropy, 
     FocalLoss, AdvancedAugmentation, TestTimeAugmentation,
     calculate_class_weights, get_advanced_scheduler, apply_mixup_cutmix_probability
 )
@@ -66,7 +66,7 @@ def setup_enhanced_anti_overfitting_training():
     
     return writer, experiment_dir, model_dir
 
-def add_enhanced_dropout_to_model(model, dropout_rate=0.7):
+def add_enhanced_dropout_to_model(model, dropout_rate=0.3):
     """
     Menambahkan dropout layers yang lebih agresif ke model untuk mengurangi overfitting.
     """
@@ -163,23 +163,26 @@ def train_enhanced_anti_overfitting_model(model_name_key: str, model_name: str, 
         return None
     
     # Tambahkan dropout yang lebih agresif
-    model = add_enhanced_dropout_to_model(model, dropout_rate=0.7)
+    model = add_enhanced_dropout_to_model(model, dropout_rate=0.4)
     
     model = model.to(config.DEVICE)
     
     # Setup loss function dengan label smoothing dan focal loss
     # Kombinasi label smoothing dan focal loss untuk mengatasi overfitting dan class imbalance
-    label_smooth_loss = LabelSmoothingCrossEntropy(smoothing=0.1)
-    focal_loss = FocalLoss(alpha=1, gamma=2)
-    
+    #label_smooth_loss = LabelSmoothingCrossEntropy(smoothing=0.2)
+
+    focal_loss = FocalLoss(gamma=2)
+    print(f"   Loss Function: Focal Loss (gamma=2)")
+
     # Combined loss function
-    def combined_loss(pred, target):
-        return 0.7 * label_smooth_loss(pred, target) + 0.3 * focal_loss(pred, target)
+    #def combined_loss(pred, target):
+    #    return 0.7 * label_smooth_loss(pred, target) + 0.3 * focal_loss(pred, target)
     
-    loss_fn = combined_loss
+    #loss_fn = combined_loss
+    loss_fn = focal_loss
     
     # Setup optimizer dengan weight decay yang lebih besar
-    optimizer = optim.AdamW(model.parameters(), lr=config.LEARNING_RATE, weight_decay=2e-3)
+    optimizer = optim.AdamW(model.parameters(), lr=config.LEARNING_RATE, weight_decay=3e-3)
     
     # Setup advanced learning rate scheduler
     scheduler = get_advanced_scheduler(optimizer, method='cosine_warmup', total_epochs=config.EPOCHS)
@@ -191,7 +194,7 @@ def train_enhanced_anti_overfitting_model(model_name_key: str, model_name: str, 
     best_epoch = 0
     
     # Early stopping yang lebih ketat
-    patience = 10  # Stop jika tidak ada improvement selama 7 epoch
+    patience = 0  # Stop jika tidak ada improvement selama 7 epoch
     epochs_no_improve = 0
     
     print(f"Memulai enhanced training {config.EPOCHS} epochs...")
@@ -376,7 +379,7 @@ def generate_enhanced_confusion_matrix(model, val_loader, class_names, model_dir
     # Print per-class accuracy
     print(f"\n   Enhanced Per-Class Accuracy:")
     for i, class_name in enumerate(class_names):
-        if i < len(report) - 3:  # Exclude 'accuracy', 'macro avg', 'weighted avg'
+        if i < len(report) - 3: # Exclude 'accuracy', 'macro avg', 'weighted avg'
             acc = report[class_name]['f1-score']
             print(f"   {class_name:25}: {acc:.4f}")
 
@@ -413,7 +416,7 @@ def main():
     model_mapping = {
         "vit": "vit_base_patch16_224",
         "swin_transformer": "swin_base_patch4_window7_224", 
-        "convnext_tiny": "convnext_tiny"
+        #"convnext_tiny": "convnext_tiny"
     }
     
     # 4. Enhanced Training

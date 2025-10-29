@@ -20,4 +20,4 @@ RANDOM_SEED = 42 # Agar hasil split selalu sama
 
 # Daftar model yang akan diuji
 # Mulai dengan model terkecil dulu untuk testing
-MODEL_LIST = ["convnext_tiny"]  # Model terkecil untuk testing awal
+MODEL_LIST = ["swin"]  # Model terkecil untuk testing awal
